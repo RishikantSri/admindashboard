@@ -13,15 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('backend.dashboard');
-});
 
-Route::get('/login', function () {
-    return view('backend.login');
-});
+Route::get('/login',[App\Http\Controllers\Admin\AuthController::class, 'login'])->name('login');
+Route::post('/adminlogin',[App\Http\Controllers\Admin\AuthController::class, 'loginAuthenticate'])->name('adminlogin');
+Route::get('/logout',[App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('logout');
 
-Route::get('/myaccount', function () {
-    return view('backend.myaccount');
+
+Route::group(['middleware' => 'auth'], function () {
+    
+    Route::get('/', function () {
+        return view('backend.dashboard');
+    });
+
+    Route::get('/dashboard',[App\Http\Controllers\Admin\AuthController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('/myaccount', function () {
+        return view('backend.myaccount');
+    });
+   
+    
 });
 
