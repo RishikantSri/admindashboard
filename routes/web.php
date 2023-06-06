@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login',[App\Http\Controllers\Admin\AuthController::class, 'login'])->name('login');
 Route::post('/adminlogin',[App\Http\Controllers\Admin\AuthController::class, 'loginAuthenticate'])->name('adminlogin');
 Route::get('/logout',[App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('logout');
+Route::get('/password/forget',[App\Http\Controllers\Admin\AuthController::class, 'forgetPassword'])->name('password.forget');
+Route::post('/password/forgot',[App\Http\Controllers\Admin\AuthController::class,'sendResetLink'])->name('password.forget.link');
+Route::get('/password/reset/{token}',[App\Http\Controllers\Admin\AuthController::class,'showResetForm'])->name('password.reset.form');
+Route::post('/password/reset',[App\Http\Controllers\Admin\AuthController::class,'resetPassword'])->name('password.reset');
 
 
 Route::group(['middleware' => 'auth'], function () {
